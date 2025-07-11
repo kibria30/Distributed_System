@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+
+#--------------------------USER SERVICE--------------------------
+
+  user-db:
+    image: postgres:15
+    container_name: user-composed-db
+    environment:
+      - POSTGRES_DB=${USER_DB_NAME}
+      - POSTGRES_USER=${USER_DB_USER}
+      - POSTGRES_PASSWORD=${USER_DB_PASS}
+    # ports:
+    #   - "5450:5432"
+    # volumes:
+    #   - user_db_data:/var/lib/postgresql/data
+    networks:
+      - library-network
+
+
+  user-service:
+    build:
+      context: ./user_service
+    container_name: user-composed-app
+    ports:
+      - "8001:8001"
+    depends_on:
+      - user-db
+    networks:
+      - library-network
+
+
+
+# --------------------------BOOK SERVICE--------------------------
+
+  book-db:
+    image: postgres:15
+    container_name: book-composed-db
+    environment:
+      - POSTGRES_DB=${BOOK_DB_NAME}
+      - POSTGRES_USER=${BOOK_DB_USER}
+      - POSTGRES_PASSWORD=${BOOK_DB_PASS}
+    # ports:
+    #   - "5451:5432"
+    # volumes:
+    #   - book_db_data:/var/lib/postgresql/data
+    networks:
+      - library-network
+
+
+  book-service:
+    build:
+      context: ./book_service
+    container_name: book-composed-app
+    ports:
+      - "8002:8002"
+    depends_on:
+      - book-db
+    networks:
+      - library-network
+
+
+#--------------------------LOAN SERVICE--------------------------
+
+  loan-db:
+    image: postgres:15
+    container_name: loan-composed-db
+    environment:
+      - POSTGRES_DB=${LOAN_DB_NAME}
+      - POSTGRES_USER=${LOAN_DB_USER}
+      - POSTGRES_PASSWORD=${LOAN_DB_PASS}
+    # ports:
+    #   - "5452:5432"
+    # volumes:
+    #   - loan_db_data:/var/lib/postgresql/data
+    networks:
+      - library-network
+
+  loan-service:
+    build:
+      context: ./loan_service
+    container_name: loan-composed-app
+    ports:
+      - "8003:8003"
+    depends_on:
+      - loan-db
+    networks:
+      - library-network
+
+
+
+#---------------------------NETWORKS---------------------------
+networks:
+  library-network:
+    driver: bridge
