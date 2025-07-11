@@ -1,7 +1,10 @@
 import httpx
 
+USER_SERVICE_URL = "http://user-service-app:8001"
+BOOK_SERVICE_URL = "http://book-service-app:8002"
+
 async def get_user(user_id):
-    url = f"http://localhost:8001/api/v1/users/{user_id}"
+    url = f"{USER_SERVICE_URL}/api/v1/users/{user_id}"
     try:
         async with httpx.AsyncClient(timeout=5) as client:
             response = await client.get(url)
@@ -20,7 +23,7 @@ async def get_user(user_id):
 
 
 async def get_book(book_id):
-    url = f"http://localhost:8002/api/v1/books/{book_id}"
+    url = f"{BOOK_SERVICE_URL}/api/v1/books/{book_id}"
     try:
         async with httpx.AsyncClient(timeout=5) as client:
             response = await client.get(url)
@@ -38,7 +41,7 @@ async def get_book(book_id):
 
 
 async def update_book(book_id, copies, available_copies):
-    url = f"http://localhost:8002/api/v1/books/{book_id}"
+    url = f"{BOOK_SERVICE_URL}/api/v1/books/{book_id}"
     data = {
         "copies": copies,
         "available_copies": available_copies
