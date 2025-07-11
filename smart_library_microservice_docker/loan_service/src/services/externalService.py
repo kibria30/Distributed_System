@@ -1,7 +1,8 @@
+import os
 import httpx
 
-USER_SERVICE_URL = "http://user-service-app:8001"
-BOOK_SERVICE_URL = "http://book-service-app:8002"
+USER_SERVICE_URL = os.getenv("USER_SERVICE_URL")
+BOOK_SERVICE_URL = os.getenv("BOOK_SERVICE_URL")
 
 async def get_user(user_id):
     url = f"{USER_SERVICE_URL}/api/v1/users/{user_id}"
