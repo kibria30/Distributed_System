@@ -13,8 +13,8 @@ services:
       - POSTGRES_PASSWORD=${USER_DB_PASS}
     # ports:
     #   - "5450:5432"
-    # volumes:
-    #   - user_db_data:/var/lib/postgresql/data
+    volumes:
+      - ./userVolume:/var/lib/postgresql/data
     networks:
       - library-network
 
@@ -43,8 +43,8 @@ services:
       - POSTGRES_PASSWORD=${BOOK_DB_PASS}
     # ports:
     #   - "5451:5432"
-    # volumes:
-    #   - book_db_data:/var/lib/postgresql/data
+    volumes:
+      - ./book_service/bookVolume:/var/lib/postgresql/data
     networks:
       - library-network
 
@@ -72,8 +72,8 @@ services:
       - POSTGRES_PASSWORD=${LOAN_DB_PASS}
     # ports:
     #   - "5452:5432"
-    # volumes:
-    #   - loan_db_data:/var/lib/postgresql/data
+    volumes:
+      - ./loan_service/loanVolume:/var/lib/postgresql/data
     networks:
       - library-network
 
@@ -94,3 +94,4 @@ services:
 networks:
   library-network:
     driver: bridge
+    
